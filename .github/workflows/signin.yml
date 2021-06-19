@@ -1,10 +1,10 @@
-name: 'GitHub Actions Weather Bot'
+name: 'sign in Bot'
  
 on:
   push:
   schedule:
   # 定时任务，在每天的5点推送天气信息到邮箱
-    - cron: '0 16 * * *'
+    - cron: '0 21 * * *'
 
 jobs:
   bot:
@@ -36,4 +36,4 @@ jobs:
        pip install requests
     - name: Update paper list
       run: |
-        python qd.py ${{ secrets.username }} ${{ secrets.password }} ${{ secrets.answer }} ${{ secrets.email }} ${{ secrets.email_pass }} ${{ secrets.receiver }}
+        python qd.py ${{ secrets.username }} ${{ secrets.password }} ${{ secrets.answer }} ${{ secrets.dingtalk_token }} 

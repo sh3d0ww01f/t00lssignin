@@ -3,7 +3,7 @@ name: 'sign in Bot'
 on:
   push:
   schedule:
-  # 定时任务，在每天的5点推送天气信息到邮箱
+  # 定时任务，在每天的5点推送登录信息到钉钉
     - cron: '0 21 * * *'
 
 jobs:

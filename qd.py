@@ -139,7 +139,7 @@ def t00ls_domain(t00ls_hash, t00ls_cookies):
                 query_status = True
             else:
                 print(f'糟糕 域名查询成功 但是 TuBi 没有增加 可能域名重复了,失败的域名是: {domain}')
-                content += '糟糕 域名查询成功 但是 TuBi 没有增加 可能域名重复了\n'
+                content += f'糟糕 域名查询成功 但是 TuBi 没有增加 可能域名重复了,失败的域名是: {domain}\n'
                 query_count += 1
                 print(f'随机延时 5-10 秒，继续第 {query_count} 次查询')
                 content += f'随机延时 5-10 秒，继续第 {query_count} 次查询\n\n'

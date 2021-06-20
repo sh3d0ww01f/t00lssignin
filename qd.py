@@ -119,7 +119,7 @@ def t00ls_domain(t00ls_hash, t00ls_cookies):
     query_count = 0  # 查询重试次数
 
     # 如果 t00ls 查询没有成功的话 就一直查询
-    while not query_status and query_count < 2:
+    while not query_status and query_count < 5:
 
         domain=getdomain()  # 随机抽取一个 幸运儿
         query_data = {

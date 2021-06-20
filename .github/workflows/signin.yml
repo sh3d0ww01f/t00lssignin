@@ -5,7 +5,7 @@ on:
     types: started
   schedule:
   # 定时任务，在每天的5点推送登录信息到钉钉
-    - cron: '42 15 * * *'
+    - cron: '0 16 * * *'
 
 jobs:
   bot:

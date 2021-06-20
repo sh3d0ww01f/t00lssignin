@@ -95,7 +95,7 @@ def getdomain():
     r=requests.get('https://www.beianx.cn',headers)
     a=re.compile('<a href="/bacx/(.*?).com">')
     b=a.findall(r.text)
-    return b[24:]
+    return b[random.sample(range(29, len(b)), 1)[0]]+".com"
 def t00ls_domain(t00ls_hash, t00ls_cookies):
     """
     t00ls 域名查询函数
@@ -119,9 +119,9 @@ def t00ls_domain(t00ls_hash, t00ls_cookies):
     query_count = 0  # 查询重试次数
 
     # 如果 t00ls 查询没有成功的话 就一直查询
-    while not query_status and query_count < 5:
+    while not query_status and query_count < 2:
 
-        domain=response_domains[random.sample(range(1, len(response_domains)), 1)[0]]+".com"  # 随机抽取一个 幸运儿
+        domain=getdomain()  # 随机抽取一个 幸运儿
         query_data = {
         'domain': domain,
         'formhash': t00ls_hash,

@@ -34,7 +34,19 @@ req_headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36',
     'Content-Type': 'application/x-www-form-urlencoded'
 }
-
+def t00ls_sign(t00ls_hash, t00ls_cookies):
+    """
+    t00ls 签到函数
+    :param t00ls_hash: 签到要用的 hash
+    :param t00ls_cookies: 登录后的 Cookies
+    :return: 签到后的 JSON 数据
+    """
+    sign_data = {
+        'formhash': t00ls_hash,
+        'signsubmit': "true"
+    }
+    response_sign = requests.post('https://www.t00ls.com/ajax-sign.json', data=sign_data, cookies=t00ls_cookies,headers=req_headers)
+    return json.loads(response_sign.text)
 def t00ls_login(u_name, u_pass, q_num, q_ans):
     """
     t00ls 登录函数

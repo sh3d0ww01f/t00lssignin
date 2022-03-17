@@ -103,7 +103,7 @@ def main():
         if response_sign['status'] == 'success':
             print('签到成功 TuBi + 1')
             content += '\n签到成功 \n'
-            tubi_count=t00ls_check_qd()
+            tubi_count=t00ls_check_qd(response_login[0], response_login[1])
             if(tubi_count != ''):
                 content += f'\ntubi:{tubi_coin} \n'
 
@@ -115,7 +115,7 @@ def main():
         elif response_sign['message'] == 'alreadysign':
             print('已经签到过啦')
             content += '\n已经签到过啦\n'
-            tubi_count=t00ls_check_qd()
+            tubi_count=t00ls_check_qd(response_login[0], response_login[1])
             if(tubi_count != ''):
                 content += f'\ntubi:{tubi_coin} \n'
 

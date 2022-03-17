@@ -115,6 +115,9 @@ def main():
         elif response_sign['message'] == 'alreadysign':
             print('已经签到过啦')
             content += '\n已经签到过啦\n'
+            tubi_count=t00ls_check_qd()
+            if(tubi_count != ''):
+                content += f'\ntubi:{tubi_coin} \n'
 
             if notice == 0:
                 try:

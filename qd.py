@@ -62,7 +62,16 @@ def t00ls_login(u_name, u_pass, q_num, q_ans):
         formhash = response_login_json['formhash']
         t00ls_cookies = response_login.cookies
         return formhash, t00ls_cookies
-
+def t00ls_check_qd(t00ls_hash, t00ls_cookies):
+        status=""
+        try:
+            response_query = requests.post(url="https://www.t00ls.com/members-profile.json", data=query_data, cookies=t00ls_cookies, headers=req_headers)
+            raw=json.loads(response_query)
+            status=raw["extcredits2"]
+        except:
+            pass
+        return status    
+        
 def dingtalk_send(token,text):
    
     headers = {'Content-Type': 'application/json;charset=utf-8'}  # 请求头
@@ -81,7 +90,10 @@ def main():
         response_sign = t00ls_sign(response_login[0], response_login[1])
         if response_sign['status'] == 'success':
             print('签到成功 TuBi + 1')
-            content += '\n签到成功 TuBi + 1\n'
+            content += '\n签到成功 \n'
+            tubi_count=t00ls_check_qd()
+            if(tubi_count != ''):
+                content += f'\ntubi:{tubi_coin} \n'
 
             if notice == 0:
                 try:

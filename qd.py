@@ -74,92 +74,6 @@ def dingtalk_send(token,text):
         },
     }
     requests.post(api_url, json.dumps(json_text), headers=headers).content
-def t00ls_sign(t00ls_hash, t00ls_cookies):
-    """
-    t00ls 签到函数
-    :param t00ls_hash: 签到要用的 hash
-    :param t00ls_cookies: 登录后的 Cookies
-    :return: 签到后的 JSON 数据
-    """
-    sign_data = {
-        'formhash': t00ls_hash,
-        'signsubmit': "true"
-    }
-    response_sign = requests.post('https://www.t00ls.com/ajax-sign.json', data=sign_data, cookies=t00ls_cookies,headers=req_headers)
-    return json.loads(response_sign.text)
-def getdomain():
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36',
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-    r=requests.get('https://www.beianx.cn',headers)
-    a=re.compile('<a href="/bacx/(.*?).com">')
-    b=a.findall(r.text)
-    return b[random.sample(range(29, len(b)), 1)[0]]+".com"
-def t00ls_domain(t00ls_hash, t00ls_cookies):
-    """
-    t00ls 域名查询函数
-    :param t00ls_hash: 签到要用的 hash
-    :param t00ls_cookies: 登录后的 Cookies
-    :return: 查询相关的日志信息
-    """
-    content = ''
-    # 查询今天注册的域名
-    start_time = time.time()
-
-    response_domains=getdomain()
-    end_time = time.time()
-    print(f'随机找域名耗时: {end_time - start_time:.4f}秒')
-    content += f'\n随机找域名耗时: {end_time - start_time:.4f}秒\n\n'
-
-    start_time = time.time()
-
-    query_url = 'https://www.t00ls.com/domain.html'
-    query_status = False
-    query_count = 0  # 查询重试次数
-
-    # 如果 t00ls 查询没有成功的话 就一直查询
-    while not query_status and query_count < 5:
-
-        domain=getdomain()  # 随机抽取一个 幸运儿
-        query_data = {
-        'domain': domain,
-        'formhash': t00ls_hash,
-        'querydomainsubmit':'查询'
-    }
-        try:
-            response_query = requests.post(url=query_url, data=query_data, cookies=t00ls_cookies, headers=req_headers)
-        except Exception:
-            pass
-        if domain in response_query.text:
-            response_tb = requests.get('https://www.t00ls.com/members-tubilog.json', cookies=t00ls_cookies)
-            if domain in response_tb.text:
-                print('查询域名成功 TuBi + 1 \n')
-                content += '查询域名成功 TuBi + 1\n'
-                query_status = True
-            else:
-                print(f'糟糕 域名查询成功 但是 TuBi 没有增加 可能域名重复了,失败的域名是: {domain}')
-                content += f'糟糕 域名查询成功 但是 TuBi 没有增加 可能域名重复了,失败的域名是: {domain}\n'
-                query_count += 1
-                print(f'随机延时 5-10 秒，继续第 {query_count} 次查询')
-                content += f'随机延时 5-10 秒，继续第 {query_count} 次查询\n\n'
-                time.sleep(random.randint(5, 10))
-        else:
-            print(f'查询失败？失败的域名是: {domain}')
-            content += f'查询失败？失败的域名是: {domain}\n'
-            query_count += 1
-            print(f'随机延时 5-10 秒，继续第 {query_count} 次查询')
-            content += f'随机延时 5-10 秒，继续第 {query_count} 次查询\n\n'
-            time.sleep(random.randint(5, 10))
-        if query_count == 5:
-            print('重试查询次数已达上限 终止查询')
-            content += '重试查询次数已达上限 终止查询\n\n'
-
-    end_time = time.time()
-    print(f't00ls 域名查询耗时: {end_time - start_time:.4f}秒')
-    content += f't00ls 域名查询耗时: {end_time - start_time:.4f}秒\n'
-    return content
-
 def main():
     content = ''
     response_login = t00ls_login(username, password, question_num, question_answer)
@@ -169,9 +83,6 @@ def main():
             print('签到成功 TuBi + 1')
             content += '\n签到成功 TuBi + 1\n'
 
-            verbose_log = t00ls_domain(response_login[0], response_login[1])
-            content += verbose_log
-
             if notice == 0:
                 try:
                    dingtalk_send(dingtalk_token,content)
@@ -180,9 +91,6 @@ def main():
         elif response_sign['message'] == 'alreadysign':
             print('已经签到过啦')
             content += '\n已经签到过啦\n'
-
-            verbose_log = t00ls_domain(response_login[0], response_login[1])
-            content += verbose_log
 
             if notice == 0:
                 try:

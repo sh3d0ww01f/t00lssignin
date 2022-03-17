@@ -116,6 +116,7 @@ def main():
             print('已经签到过啦')
             content += '\n已经签到过啦\n'
             tubi_count=t00ls_check_qd(response_login[0], response_login[1])
+            print(tubi_count)
             if(tubi_count != ''):
                 content += f'\ntubi:{tubi_coin} \n'
 

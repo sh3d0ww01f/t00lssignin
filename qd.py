@@ -82,7 +82,7 @@ def t00ls_check_qd(t00ls_hash, t00ls_cookies):
             status=response_query.text
       #  except:
        #     pass
-            return status    
+            return json.loads(status)["loglist"][0]["cmoney"]    
         
 def dingtalk_send(token,text):
    

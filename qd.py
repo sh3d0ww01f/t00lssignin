@@ -75,14 +75,14 @@ def t00ls_login(u_name, u_pass, q_num, q_ans):
         t00ls_cookies = response_login.cookies
         return formhash, t00ls_cookies
 def t00ls_check_qd(t00ls_hash, t00ls_cookies):
-        status=""
-        try:
+     #   status=""
+     #   try:
             response_query = requests.post(url="https://www.t00ls.com/members-tubilog.json", data=query_data, cookies=t00ls_cookies, headers=req_headers)
             print(response_query.text)
             status=response_query.text
-        except:
-            pass
-        return status    
+      #  except:
+       #     pass
+            return status    
         
 def dingtalk_send(token,text):
    

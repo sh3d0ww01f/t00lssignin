@@ -75,15 +75,13 @@ def t00ls_login(u_name, u_pass, q_num, q_ans):
         t00ls_cookies = response_login.cookies
         return formhash, t00ls_cookies
 def t00ls_check_qd(t00ls_hash, t00ls_cookies):
-     #   status=""
-     #   try:
+        status=""
+        try:
             response_query = requests.post(url="https://www.t00ls.com/members-tubilog.json",  cookies=t00ls_cookies, headers=req_headers)
-           # print(response_query.text)
-            status=response_query.text
-            print(json.loads(status)["loglist"][0]["cmoney"]  )
-      #  except:
-       #     pass
-            return json.loads(status)["loglist"][0]["cmoney"]    
+            status=json.loads(status)["loglist"][0]["cmoney"]
+        except:
+            pass
+        return status
         
 def dingtalk_send(token,text):
    
@@ -101,13 +99,12 @@ def main():
     response_login = t00ls_login(username, password, question_num, question_answer)
     if response_login:
         response_sign = t00ls_sign(response_login[0], response_login[1])
+        tubi_count=t00ls_check_qd(response_login[0], response_login[1])
+        if(tubi_count != ''):
+            content += f'\ntubi:{tubi_coin} \n'
         if response_sign['status'] == 'success':
             print('签到成功 TuBi + 1')
             content += '\n签到成功 \n'
-            tubi_count=t00ls_check_qd(response_login[0], response_login[1])
-            if(tubi_count != ''):
-                content += f'\ntubi:{tubi_coin} \n'
-
             if notice == 0:
                 try:
                    dingtalk_send(dingtalk_token,content)
@@ -116,10 +113,8 @@ def main():
         elif response_sign['message'] == 'alreadysign':
             print('已经签到过啦')
             content += '\n已经签到过啦\n'
-            tubi_count=t00ls_check_qd(response_login[0], response_login[1])
-            print(tubi_count)
             if(tubi_count != ''):
-                content += f'\ntubi:{tubi_coin} \n'
+                content += f'\ntubi:{tubi_count} \n'
 
             if notice == 0:
                 try:

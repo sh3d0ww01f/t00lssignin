@@ -78,8 +78,9 @@ def t00ls_check_qd(t00ls_hash, t00ls_cookies):
      #   status=""
      #   try:
             response_query = requests.post(url="https://www.t00ls.com/members-tubilog.json",  cookies=t00ls_cookies, headers=req_headers)
-            print(response_query.text)
+           # print(response_query.text)
             status=response_query.text
+            print(json.loads(status)["loglist"][0]["cmoney"]  )
       #  except:
        #     pass
             return json.loads(status)["loglist"][0]["cmoney"]    

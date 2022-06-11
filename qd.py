@@ -8,6 +8,7 @@ from email.mime.text import MIMEText
 from email.utils import formataddr
 import sys
 
+
 # t00ls 账号配置
 
 username=sys.argv[1]

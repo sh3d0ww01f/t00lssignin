@@ -110,7 +110,7 @@ def main():
                 try:
                    dingtalk_send(dingtalk_token,content)
                 except Exception:
-                    print('请检查钉钉机器人配置是否正确1')                        
+                    print('请检查钉钉机器人配置是否正确')                        
         elif response_sign['message'] == 'alreadysign':
             print('已经签到过啦')
             content += '\n已经签到过啦\n'

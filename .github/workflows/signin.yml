@@ -3,10 +3,6 @@ name: 'sign in Bot'
 on:
   watch:
     types: started
-  schedule:
-  # 定时任务，在每天的5点推送登录信息到钉钉
-    - cron: '0 16 * * *'
-
 jobs:
   bot:
 
@@ -15,16 +11,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Set up Python 3.7
+    - name: Set up Python 3.10
       uses: actions/setup-python@master
       with:
-        python-version: 3.7
+        python-version: 3.10
     - name: Set up Python
       uses: actions/setup-python@v2
-
-      with:
-
-       python-version: '3.x'
 
       # 安装依赖
 
@@ -37,4 +29,4 @@ jobs:
        pip install requests
     - name: Update paper list
       run: |
-        python qd.py ${{ secrets.username }} ${{ secrets.password }} ${{ secrets.answer }} ${{ secrets.dingtalk_token }} 
+        python qd.py
